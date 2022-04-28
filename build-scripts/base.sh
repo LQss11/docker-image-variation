@@ -9,11 +9,12 @@ for VARIANT in ./variants/*; do
     VARIANTS+=($(echo $VARIANT | cut -d "/" -f3))
     fi
 done
-
-#echo  ${VARIANTS[1]}
+echo "Building base images $BASE..."
+echo docker build --pull --tag $BASE --file ./variants/Dockerfile.$BASE ./context
 for VARIANT in ${VARIANTS[@]}; do
+    #sed "s/base/$BASE/g" ./variants/$VARIANT/Dockerfile
     echo "PUSHING $BASE-$VARIANT"
-    echo docker push $BASE-$VARIANT
+    #echo docker push $BASE-$VARIANT
 done
 
 # echo "Pushing base images..."
