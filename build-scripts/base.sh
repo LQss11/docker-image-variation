@@ -4,16 +4,17 @@
 # git update-index --chmod=+x .\build-scripts\anonymous-docker-build.sh
 for VARIANT in ./variants/*; do
     if [[ "$VARIANT" == *"Dockerfile"* ]]; then
-    BASE=$(echo $VARIANT | cut -d "." -f3)
+        BASE=$(echo $VARIANT | cut -d "." -f3)
     else
-    VARIANTS+=($(echo $VARIANT | cut -d "/" -f3))
+        VARIANTS+=($(echo $VARIANT | cut -d "/" -f3))
     fi
 done
 echo "Building base images $BASE..."
-echo docker build --pull --tag $BASE --file ./variants/Dockerfile.$BASE ./context
+docker build --pull --tag $BASE --file ./variants/Dockerfile.$BASE ./base-context
 for VARIANT in ${VARIANTS[@]}; do
     #sed "s/base/$BASE/g" ./variants/$VARIANT/Dockerfile
-    echo "PUSHING $BASE-$VARIANT"
+    echo docker build . -t fifo -f <(sed "s/base/$BASE/g" ./variants/$VARIANT/Dockerfile) >test
+    #echo "PUSHING $BASE-$VARIANT"
     #echo docker push $BASE-$VARIANT
 done
 
