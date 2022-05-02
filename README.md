@@ -16,3 +16,7 @@ REGISTRY=<registry-name> ACCOUNT=<account-name> ./build-scripts/push-variants.sh
 ```
 >Make sure you are logged when trying to push by runnning `docker login`
 > Also make sure to create the repository before pushing
+
+Default values are if not set:
+- REGISTRY=docker.io
+- ACCOUNT=lqss 
