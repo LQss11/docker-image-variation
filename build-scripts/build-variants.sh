@@ -11,7 +11,7 @@ for VARIANT in ./variants/*; do
         VARIANT=$(echo $VARIANT | cut -d "/" -f3)
         echo "Building variant image $VARIANT..."
         sed -i "s/FROM base/FROM $BASE/g" ./variants/$VARIANT/Dockerfile 
-        docker build -t $VARIANT -f ./variants/$VARIANT/Dockerfile ./variants/$VARIANT
+        docker build -t $BASE:$VARIANT -f ./variants/$VARIANT/Dockerfile ./variants/$VARIANT
         sed -i "s/FROM $BASE/FROM base/g" ./variants/$VARIANT/Dockerfile 
     fi
 done
